@@ -1,5 +1,8 @@
 package com.korit.board.controller;
 
+import com.korit.board.aop.annotation.ArgsAop;
+import com.korit.board.aop.annotation.ReturnAop;
+import com.korit.board.aop.annotation.TimeAop;
 import com.korit.board.aop.annotation.ValidAop;
 import com.korit.board.dto.SignupReqDto;
 import com.korit.board.exception.ValidException;
@@ -20,6 +23,9 @@ import java.util.Map;
 //@RestController
 public class AuthController {
 
+	@ReturnAop
+	@ArgsAop
+	@TimeAop
 	@ValidAop //이게 달리면 포인트컷이 이뤄짐.
 	@CrossOrigin
 	@PostMapping("/auth/signup")
