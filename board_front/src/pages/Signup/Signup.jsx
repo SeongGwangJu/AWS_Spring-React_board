@@ -9,7 +9,7 @@ function Signup(props) {
         email: "",
         password: "",
         name: "",
-        username: ""
+        nickname: ""
     }
 
     const [ signupUser, setSignupUser ] = useState(user);
