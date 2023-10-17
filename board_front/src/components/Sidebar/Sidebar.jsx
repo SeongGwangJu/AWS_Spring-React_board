@@ -29,8 +29,10 @@ function Sidebar(props) {
                 <h3>로그인 후 게시판을 이용해보세요.</h3>
                 <div><button>로그인</button></div>
                 <div>
-                    <Link to={"auth/forgot/password"}>비밀번호찾기</Link>
-                    <Link to={"auth/forgot/signup"}>회원가입</Link>
+                    {/* <Link to={"auth/forgot/password"}>비밀번호찾기</Link>
+                    <Link to={"auth/forgot/signup"}>회원가입</Link> */}
+                    <Link to={"auth/password"}>비밀번호찾기</Link>
+                    <Link to={"auth/signup"}>회원가입</Link>
                 </div>
             </div>
         </div>
