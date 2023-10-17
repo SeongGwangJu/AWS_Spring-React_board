@@ -5,6 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserMapper {
-	public Integer saveUser(User user);
-	public Integer getUserCountByEmail(String email);
+	public int saveUser(User user);
+	public int getUserCountByEmail(String email);
 }
