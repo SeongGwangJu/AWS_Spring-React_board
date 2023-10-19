@@ -26,10 +26,12 @@ public class PrincipalProvider implements AuthenticationProvider {
 
         UserDetails principalUser = principalUserDetailsService.loadUserByUsername(email);
 
+        //암호화 된 비밀번호와 비교함
         if(!passwordEncoder.matches(password, principalUser.getPassword())) {
             throw new BadCredentialsException("BadCredentials");
         }
 
+        //위의 조건을 통과하면 새로 Token을 만들어줌.
         return new UsernamePasswordAuthenticationToken(principalUser, password, principalUser.getAuthorities());
     }
 

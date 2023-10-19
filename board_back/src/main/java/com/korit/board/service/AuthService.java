@@ -75,6 +75,7 @@ public class AuthService {
 		UsernamePasswordAuthenticationToken authenticationToken =
 				new UsernamePasswordAuthenticationToken(signinReqDto.getEmail(), signinReqDto.getPassword());
 		//authenticate() 함수를 호출해서 인증 처리를 한 뒤에 권한이 추가된 Auth 객체를 생성
+		//authenticationManager를 쓰니까 문제가 생김 -> principalProvider를 만들어 생성.
 		Authentication authentication = principalProvider.authenticate(authenticationToken);
 
 		//위의 문장을 통해 ,성공적으로 authentication 객체를 생성했으면 다음 문장을 실행

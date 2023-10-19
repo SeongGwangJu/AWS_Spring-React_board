@@ -14,13 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountController {
 
     @GetMapping("/account/principal")
+
     public ResponseEntity<?> getPrincipal() {
         PrincipalUser principalUser =
                 (PrincipalUser) SecurityContextHolder.getContext()
                         .getAuthentication().getPrincipal();
+
+        //db에서 가져온 user
         User user = principalUser.getUser();
         PrincipalRespDto principalRespDto = user.toPrincipalDto();
-        return ResponseEntity.ok(principalRespDto);
+        return ResponseEntity.ok(principalRespDto); //user정보로 응답. 비밀번호는 절대x!
     }
 }
 

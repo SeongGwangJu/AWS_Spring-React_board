@@ -36,7 +36,7 @@ public class AuthController {
 	@PostMapping("/auth/signin")
 	public ResponseEntity<?> signin(@RequestBody SigninReqDto signinReqDto) {
 
-		return ResponseEntity.ok().body(authService.signin(signinReqDto));
+		return ResponseEntity.ok().body(authService.signin(signinReqDto)); // 토큰을 return함.
 	}
 
 	@GetMapping("/auth/token/authenticate")

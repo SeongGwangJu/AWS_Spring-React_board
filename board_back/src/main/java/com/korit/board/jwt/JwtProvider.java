@@ -32,7 +32,6 @@ public class JwtProvider {
 
     public String generateToken(Authentication authentication) {
         String email = authentication.getName();
-        PrincipalUser principalUser = (PrincipalUser) authentication.getPrincipal();
 
         Date date = new Date(new Date().getTime() + (1000 * 60 * 60 * 24));
 
@@ -40,7 +39,6 @@ public class JwtProvider {
                 .setSubject("AccessToken")
                 .setExpiration(date)
                 .claim("email", email)
-                .claim("isEnabled", principalUser.isEnabled())
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -56,7 +54,7 @@ public class JwtProvider {
         }catch(Exception e) {
             System.out.println(e.getClass() + ": " + e.getMessage());
         }
-        return claims;
+        return claims; //null이거나(jwt가 유효하지 않아 예외터졌을때) or 객체를 가짐
     }
 
     public String getToken(String bearerToken) {
@@ -77,6 +75,7 @@ public class JwtProvider {
             return null;
         }
 
+        //DB에서 가져온 user
         PrincipalUser principalUser = new PrincipalUser(user);
         return new UsernamePasswordAuthenticationToken(principalUser, null, principalUser.getAuthorities());
     }

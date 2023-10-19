@@ -11,6 +11,7 @@ import { instance } from './api/config/instance';
 function App() {
   const navigate = useNavigate();
 
+  //key값 지정 + 비동기
   const getPrincipal = useQuery(["getPrincipal"], async () => {
     try{
       const option = {
