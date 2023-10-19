@@ -1,7 +1,6 @@
 package com.korit.board.filter;
 
 import com.korit.board.jwt.JwtProvider;
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,15 +29,4 @@ public class JwtAuthenticationFilter extends GenericFilter {
         }
         chain.doFilter(request, response);
     }
-
 }
-
-
-
-
-
-
-
-
-
-

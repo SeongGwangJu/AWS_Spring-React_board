@@ -11,11 +11,12 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@ControllerAdvice //예외를 처리하기 위한 컨트롤러
+@RestControllerAdvice //예외를 처리하기 위한 컨트롤러
 public class ExceptionControllerAdvice {
 
 
@@ -32,14 +33,14 @@ public class ExceptionControllerAdvice {
 	@ExceptionHandler(UsernameNotFoundException.class)
 	public ResponseEntity<?> usernameNotFoundException(UsernameNotFoundException usernameNotFoundException) {
 		Map<String, String> message = new HashMap<>();
-		message.put("authError", "사용자 정보를 확인해주세요.");
+		message.put("authError", "사용자 정보를 확인해주세요.1");
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
 	}
 
 	@ExceptionHandler(BadCredentialsException.class)
 	public ResponseEntity<?> badCredentialsException(BadCredentialsException badCredentialsException) {
 		Map<String, String> message = new HashMap<>();
-		message.put("authError", "사용자 정보를 확인해주세요.");
+		message.put("authError", "사용자 정보를 확인해주세요.2");
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
 	}
 

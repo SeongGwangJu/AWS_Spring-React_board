@@ -7,7 +7,7 @@ function Signin(props) {
     const navigate = useNavigate();
 
     const user = {
-        username: "",
+        email: "",
         password: ""
     }
 
@@ -23,7 +23,7 @@ function Signin(props) {
     const handleInputChange = (e) => {
         setSigninUser({
             ...signinUser,
-            [e.target.name]: e.target.value
+            [e.target.name] : e.target.value
         });
     }
 
@@ -32,10 +32,17 @@ function Signin(props) {
     const handleSigninSubmit = async () => {
         try {
             const response = await instance.post("/auth/signin", signinUser);
+            localStorage.setItem("accessToken", "Bearer " + response.data);
+            window.location.replace("/");
+
             console.log("login 응답")
             console.log("response")
 
         }catch(error) {
+            if(error.response.status === 401) {
+                alert(error.response.data.authError);
+            }
+
             console.error(error);
             setErrDisplay({
                 errCode:error.code,
@@ -51,8 +58,8 @@ function Signin(props) {
 
     return (
         <div>
-            <div><input type="text" name='' onChange={handleInputChange} placeholder='' /></div>
-            <div><input type="text" name='' onChange={handleInputChange} placeholder='' /></div>
+            <div><input type="email" name="email" placeholder="이메일" onChange={handleInputChange} /></div>
+            <div><input type="password" name="password" placeholder="비밀번호" onChange={handleInputChange} /></div>
             <div>{errDisplay.errCode}<br /> {errDisplay.errMsg} <br /> {errDisplay.errResMsg} </div>
             <div><button onClick={handleSigninSubmit}>로그인</button></div>
             <div><button onClick={handleSignupClick}>회원가입</button></div>
