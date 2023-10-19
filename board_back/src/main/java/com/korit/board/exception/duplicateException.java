@@ -5,12 +5,13 @@ import lombok.Getter;
 import java.util.Map;
 
 @Getter
-public class duplicatedEmailException extends RuntimeException{
+public class duplicateException extends RuntimeException{
 
 	Map<String, String> errorMap;
 	String errMsg;
-	public duplicatedEmailException(Map<String, String> errorMap) {
-		super(errorMap.get("email"));
+
+	public duplicateException(Map<String, String> errorMap, String key) {
+		super(errorMap.get(key));
 		this.errorMap = errorMap;
 	}
 }
