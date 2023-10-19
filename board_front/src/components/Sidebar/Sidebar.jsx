@@ -20,6 +20,7 @@ function Sidebar(props) {
 
     const navigate = useNavigate();
 
+    //쿼리클라이언트 객체
     const queryClient = useQueryClient();
 
     const principalState = queryClient.getQueryState("getPrincipal");
@@ -30,12 +31,14 @@ function Sidebar(props) {
 
     const handleLogoutClick = () => {
         localStorage.removeItem("accessToken");
+        //navigate를 쓰면 상태가 유지되기때문에(변한부분만 변함, Virtual DOM)
+        //전체를 불러오기위해 아래 코드로 사용.
         window.location.replace("/");
     }
 
     return (
         <div css={layout}>
-            {!!principalState?.data?.data ? (
+            {!!principalState?.data?.data ? ( //값이 있으면 = 인증된 사용자
                 <div css={container}>
                     <h3>{principalState.data.data.nickname}님 환영합니다.</h3>
                     <div><button onClick={handleLogoutClick}>로그아웃</button></div>
@@ -43,7 +46,7 @@ function Sidebar(props) {
                         <Link to={"/account/mypage"}>마이페이지</Link>
                     </div>
                 </div>
-            ) : (
+            ) : ( //값이 없으면
                 <div css={container}>
                     <h3>로그인 후 게시판을 이용해보세요</h3>
                     <div><button onClick={handleSigninClick}>로그인</button></div>

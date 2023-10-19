@@ -10,7 +10,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(  
+root.render(
+  //QueryClient의 저장소 안.
   <QueryClientProvider client={queryClient}>
     <RecoilRoot>
       <BrowserRouter>
