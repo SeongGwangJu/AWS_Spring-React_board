@@ -1,21 +1,21 @@
 package com.korit.board.controller;
 
 import com.korit.board.dto.PrincipalRespDto;
+import com.korit.board.dto.UpdateProfileImgReqDto;
 import com.korit.board.entity.User;
 import com.korit.board.security.PrincipalUser;
+import com.korit.board.service.AccountService;
 import com.korit.board.service.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 public class AccountController {
 
+    private final AccountService accountService;
     private final MailService mailService;
 
     @GetMapping("/account/principal")
@@ -36,8 +36,8 @@ public class AccountController {
     }
 
     @PutMapping("/account/profile/img")
-    public ResponseEntity<?> uploadProfileImg() {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<?> uploadProfileImg(@RequestBody UpdateProfileImgReqDto updateProfileImgReqDto) {
+        return ResponseEntity.ok(accountService.updateProfileImg(updateProfileImgReqDto));
     }
 }
 

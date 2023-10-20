@@ -68,11 +68,20 @@ function Mypage(props) {
             },
 
             () => {
+                //화면 이미지 변경 + 서버에 이미지 저장.
                 getDownloadURL(storageRef).then(downloadUrl => {
                     console.log(downloadUrl);
                     setProfileImgSrc(downloadUrl);
-                    alert("프로필 사진이 변경되었습니다.")
-                    window.location.reload(); //새로고침 되며 DB에 있는 사진으로 바꿔옴.
+                    const option = {
+                        headers: {
+                            Authorization: localStorage.getItem("accessToken")
+                        }
+                    }
+                    instance.put("/account/profile/img", {profileUrl : downloadUrl}, option)
+                    .then(() => {
+                        alert("프로필 사진이 변경되었습니다.")
+                        window.location.reload(); //새로고침 되며 DB에 있는 사진으로 바꿔옴.
+                    })
                 })
             }
         )
