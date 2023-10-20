@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import Signin from '../pages/Signin/Signin';
 import { useQueryClient } from 'react-query';
 import MyPage from '../pages/MyPage/MyPage';
+import EditPassword from '../pages/EditPassword/EditPassword';
 
 function AccountRoute(props) {
 
@@ -18,7 +19,7 @@ function AccountRoute(props) {
     return (
         <Routes>
             <Route path="mypage" element={ <MyPage /> } />
-            <Route path="/password" element={ <></> } />
+            <Route path="/password" element={ <EditPassword/> } />
         </Routes>
     );
 }

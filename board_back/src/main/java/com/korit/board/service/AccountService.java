@@ -1,23 +1,31 @@
 package com.korit.board.service;
 
+import com.korit.board.dto.PrincipalRespDto;
+import com.korit.board.dto.UpdatePasswordReqDto;
 import com.korit.board.dto.UpdateProfileImgReqDto;
 import com.korit.board.entity.User;
 import com.korit.board.exception.AuthMailException;
+import com.korit.board.exception.MismatchedPasswordException;
 import com.korit.board.jwt.JwtProvider;
 import com.korit.board.repository.UserMapper;
+import com.korit.board.security.PrincipalUser;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class AccountService {
     private final UserMapper userMapper;
     private final JwtProvider jwtProvider;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional(rollbackFor = Exception.class)
     public boolean authenticateMail(String token) {
@@ -44,5 +52,25 @@ public class AccountService {
                 .email(email)
                 .profileUrl(updateProfileImgReqDto.getProfileUrl())
                 .build()) > 0;
+    }
+
+    public boolean updatePassword(UpdatePasswordReqDto updatePasswordReqDto) {
+        PrincipalUser principalUser = (PrincipalUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = principalUser.getUser();
+
+        //이전 비밀번호와 새 비밀번호 일치여부 확인
+        if(!passwordEncoder.matches(updatePasswordReqDto.getOldPassword(), user.getPassword())) {
+            throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+        }
+
+        //새비밀번호와 새비밀번호 확인 일치여부 확인
+        if(!Objects.equals(updatePasswordReqDto.getNewPassword(), updatePasswordReqDto.getCheckNewPassword())) {
+            throw new MismatchedPasswordException();
+        }
+
+        //암호화 한 비밀번호를 다시 만들어줌.
+        user.setPassword(passwordEncoder.encode(updatePasswordReqDto.getNewPassword()));
+
+        return userMapper.updatePassword(user) > 0 ;
     }
 }

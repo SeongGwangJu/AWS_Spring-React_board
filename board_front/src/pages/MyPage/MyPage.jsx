@@ -7,6 +7,7 @@ import { css } from "@emotion/react";
 import { ref, getDownloadURL, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../api/firebase/firebase"
 import { Line } from 'rc-progress';
+import { Link } from 'react-router-dom';
 
 function Mypage(props) {
 
@@ -168,6 +169,7 @@ function Mypage(props) {
                     </div>
                 </div>
             </div>
+            <Link to= {"/account/password"}>비밀번호 변경</Link>;
 
         </RootContainer>
     );

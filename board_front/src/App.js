@@ -10,6 +10,7 @@ import { instance } from './api/config/instance';
 import AuthRoute from './Routes/AuthRoute';
 import MyPageRoute from './Routes/AccountRoute';
 import AccountRoute from './Routes/AccountRoute';
+import EditPassword from './pages/EditPassword/EditPassword';
 
 function App() {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ function App() {
       <Route path="/board/:category" element={<></>} />
       <Route path="/board/:category/register" element={<></>} />
       <Route path="/board/:category/edit" element={<></>} />
+      <Route path="/auth/forgot/password" element={<EditPassword />} />
       {/* <Route path="/" element={<></>} /> */}
     </Routes>
     </RootLayout>
