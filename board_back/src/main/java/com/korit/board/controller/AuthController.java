@@ -9,6 +9,7 @@ import com.korit.board.exception.ValidException;
 import com.korit.board.service.AccountService;
 import com.korit.board.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -53,5 +54,9 @@ public class AuthController {
 		return ResponseEntity.ok(accountService.authenticateMail(token) ? "인증이 완료되었습니다." : "인증 실패");
 	}
 
-	
+	@PostMapping("/account/profile/img")
+	public ResponseEntity<?> uploadProfileImg() {
+		return ResponseEntity.ok(null);
+	}
+
 }
