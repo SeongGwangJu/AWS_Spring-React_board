@@ -1,6 +1,6 @@
 import React from 'react';
 import RootContainer from '../components/RootContainer/RootContainer';
-import { Navigate, Route } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Signin from '../pages/Signin/Signin';
 import { useQueryClient } from 'react-query';
 import MyPage from '../pages/MyPage/MyPage';
@@ -16,10 +16,10 @@ function AccountRoute(props) {
     }
 
     return (
-        <Route>
+        <Routes>
             <Route path="mypage" element={ <MyPage /> } />
             <Route path="/password" element={ <></> } />
-        </Route>
+        </Routes>
     );
 }
 

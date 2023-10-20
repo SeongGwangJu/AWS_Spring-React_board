@@ -6,7 +6,7 @@ import { useQueryClient } from 'react-query';
 
 function AuthRoute(props) {
 
-    // const navigate = useNavigate();
+    
     const queryClient = useQueryClient();
     const principalState = queryClient.getQueryState("getPrincipal");
 
