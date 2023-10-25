@@ -52,6 +52,14 @@ function Signin(props) {
 
         }
     }
+    const handleKakaoLogin = () => {
+        window.location.href = "http://localhost:8080/oauth2/authorization/kakao"
+    }
+
+    const handleNaverLogin = () => {
+        window.location.href = "http://localhost:8080/oauth2/authorization/naver"
+    }
+    
     const handleSignupClick = () => {
         navigate("/auth/signup")
     }
@@ -63,6 +71,8 @@ function Signin(props) {
             <div>{errDisplay.errCode}<br /> {errDisplay.errMsg} <br /> {errDisplay.errResMsg} </div>
             <div><button onClick={handleSigninSubmit}>로그인</button></div>
             <div><button onClick={handleSignupClick}>회원가입</button></div>
+            <div><button onClick={handleKakaoLogin}>카카오 로그인</button></div>
+            <div><button onClick={handleNaverLogin}>네이버 로그인</button></div>
         </div>
 
     );
