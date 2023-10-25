@@ -76,9 +76,9 @@ function Sidebar(props) {
                         <div>
                 <ul>
                     <Link to={"/board/write"}><li>글쓰기</li></Link>
-                    <Link to={"/board/all"}><li>전체 게시글 ({categories.map(category => category.boardCount).reduce((sum, curValue) => sum + curValue, 0)})</li></Link>
+                    <Link to={"/board/all/1"}><li>전체 게시글 ({categories.map(category => category.boardCount).reduce((sum, curValue) => sum + curValue, 0)})</li></Link>
                     {categories.map(category => {
-                        return  <Link key={category.boardCategoryId} to={`/board/${category.boardCategoryName}`}>
+                        return  <Link key={category.boardCategoryId} to={`/board/${category.boardCategoryName}/1`}>
                                     <li>
                                         {category.boardCategoryName} ({category.boardCount})
                                     </li>
