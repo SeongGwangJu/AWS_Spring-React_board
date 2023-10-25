@@ -2,6 +2,7 @@ package com.korit.board.config;
 
 import com.korit.board.filter.JwtAuthenticationFilter;
 import com.korit.board.security.PrincipalEntryPoint;
+import com.korit.board.security.oauth2.OAuth2SuccessHandler;
 import com.korit.board.service.PrincipalUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private final PrincipalEntryPoint principalEntryPoint;
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 	private final PrincipalUserDetailsService principalUserDetailsService;
+	private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
