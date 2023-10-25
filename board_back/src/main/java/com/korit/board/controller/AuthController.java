@@ -3,6 +3,7 @@ package com.korit.board.controller;
 import com.korit.board.aop.annotation.ArgsAop;
 import com.korit.board.aop.annotation.TimeAop;
 import com.korit.board.aop.annotation.ValidAop;
+import com.korit.board.dto.MergeOauth2ReqDto;
 import com.korit.board.dto.SigninReqDto;
 import com.korit.board.dto.SignupReqDto;
 import com.korit.board.exception.ValidException;
