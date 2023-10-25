@@ -59,4 +59,11 @@ public class AuthController {
 		return ResponseEntity.ok(null);
 	}
 
+
+	@ValidAop
+	@PutMapping("/auth/oauth2/merge")
+	public ResponseEntity<?> oauth2Merge(@Valid @RequestBody MergeOauth2ReqDto mergeOauth2ReqDto, BindingResult bindingResult) {
+		return ResponseEntity.ok(authService.mergeOauth2(mergeOauth2ReqDto));
+	}
+
 }

@@ -12,4 +12,6 @@ public interface UserMapper {
 	public User findUserByOauth2Id(String oauth2Id);
 	public int updateProfileUrl(User user);
 	public int updatePassword(User user);
+	public int updateOauth2IdAndProvider(User user);
+
 }

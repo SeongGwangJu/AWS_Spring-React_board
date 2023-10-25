@@ -1,5 +1,6 @@
 package com.korit.board.service;
 
+import com.korit.board.dto.MergeOauth2ReqDto;
 import com.korit.board.dto.SigninReqDto;
 import com.korit.board.dto.SignupReqDto;
 import com.korit.board.entity.User;
@@ -19,6 +20,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -90,5 +92,16 @@ public class AuthService {
 		//null이 아니면 쓸 수 있는 토큰
 		//이메일 인증 여부를 한번더 확인하여 반환
 		return Boolean.parseBoolean(claims.get("enabled").toString());
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public boolean mergeOauth2(MergeOauth2ReqDto mergeOauth2ReqDto) {
+		User user = userMapper.findUserByEmail(mergeOauth2ReqDto.getEmail());
+
+		if(!passwordEncoder.matches(mergeOauth2ReqDto.getPassword(), user.getPassword())) {
+			throw new BadCredentialsException("BadCredentials");
+		}
+
+		return userMapper.updateOauth2IdAndProvider(mergeOauth2ReqDto.toUserEntity()) > 0;
 	}
 }
