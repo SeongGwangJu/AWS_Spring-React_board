@@ -18,6 +18,7 @@ function AuthRoute(props) {
         <Routes>
             <Route path="signin" element={<Signin />} />
             <Route path="signup" element={<Signup />} />
+            <Route path="oauth2/signup" element={ <SignupOauth2 /> } />
         </Routes>
     );
 }
