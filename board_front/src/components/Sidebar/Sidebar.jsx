@@ -56,6 +56,11 @@ function Sidebar(props) {
                     </div>
                 </div>
             )}
+                        <div>
+                <ul>
+                    <Link to={"/board/write"}><li>글쓰기</li></Link>
+                </ul>
+            </div>
 
         </div>
     );

@@ -11,6 +11,7 @@ import AuthRoute from './Routes/AuthRoute';
 import MyPageRoute from './Routes/AccountRoute';
 import AccountRoute from './Routes/AccountRoute';
 import EditPassword from './pages/EditPassword/EditPassword';
+import BoardWrite from './pages/BoardWrite/BoardWrite';
 
 function App() {
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ function App() {
       <Route path="/" element={<Home />} />;
       <Route path="/auth/*" element={<AuthRoute />} />;
       <Route path="/account/*" element={<AccountRoute />} />
+      <Route path="/board/write" element={ <BoardWrite />} />
       <Route path="/board/:category" element={<></>} />
       <Route path="/board/:category/register" element={<></>} />
       <Route path="/board/:category/edit" element={<></>} />
