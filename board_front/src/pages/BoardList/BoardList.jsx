@@ -1,12 +1,10 @@
-import React from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
-import RootContainer from '../../components/RootContainer/RootContainer';
 import { css } from '@emotion/react';
-import ReactSelect from 'react-select';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { instance } from '../../api/config/instance';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
+import { Link, useParams } from 'react-router-dom';
+import ReactSelect from 'react-select';
+import { instance } from '../../api/config/instance';
+import RootContainer from '../../components/RootContainer/RootContainer';
 /** @jsxImportSource @emotion/react */
 
 const table = css`
@@ -74,7 +72,7 @@ function BoardList(props) {
 
     const [ boardList, setBoardList ] = useState([]);
 
-    const getBoardList = useQuery(["getBoardList", page], async () => {
+    const getBoardList = useQuery(["getBoardList", page, category], async () => {
         const option = {
             params: {
                 optionName: "",

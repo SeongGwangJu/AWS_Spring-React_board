@@ -3,6 +3,7 @@ package com.korit.board.controller;
 import com.korit.board.aop.annotation.ArgsAop;
 import com.korit.board.aop.annotation.ValidAop;
 import com.korit.board.dto.RegisterBoardReqDto;
+import com.korit.board.dto.SearchBoardlistReqDto;
 import com.korit.board.dto.WriteBoardReqDto;
 import com.korit.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,7 @@ public class BoardController{
 	public ResponseEntity<?> getBoardList(
 			@PathVariable String categoryName,
 			@PathVariable int page,
-			SearchBoardListReqDto searchBoardListReqDto) {
+			SearchBoardlistReqDto searchBoardListReqDto) {
 
 		return ResponseEntity.ok(null);
 	}
