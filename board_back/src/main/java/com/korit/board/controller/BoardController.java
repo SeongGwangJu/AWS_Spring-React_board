@@ -40,7 +40,7 @@ public class BoardController{
 			@PathVariable int page,
 			SearchBoardlistReqDto searchBoardListReqDto) {
 
-		return ResponseEntity.ok(null);
+		return ResponseEntity.ok(boardService.getBoardList(categoryName, page, searchBoardListReqDto));
 	}
 
 }
