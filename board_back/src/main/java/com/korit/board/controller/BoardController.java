@@ -57,6 +57,21 @@ public class BoardController{
 	public ResponseEntity<?> getBoard(@PathVariable int boardId) {
 		return ResponseEntity.ok(boardService.getBoard(boardId));
 	}
+
+	@GetMapping("/board/like/{boardId}")
+	public ResponseEntity<?> getLikeState(@PathVariable int boardId) {
+		return ResponseEntity.ok(boardService.getLikeState(boardId));
+	}
+
+	@PostMapping("/board/like/{boardId}")
+	public ResponseEntity<?> setLike(@PathVariable int boardId) {
+		return ResponseEntity.ok(boardService.setLike(boardId));
+	}
+
+	@DeleteMapping("/board/like/{boardId}")
+	public ResponseEntity<?> cancelLike(@PathVariable int boardId) {
+		return ResponseEntity.ok(boardService.cancelLike(boardId));
+	}
 }
 
 

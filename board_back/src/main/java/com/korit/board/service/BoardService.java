@@ -74,4 +74,27 @@ public class BoardService {
         System.out.println(boardMapper.getBoardByBoardId(boardId).toBoardDto());
         return boardMapper.getBoardByBoardId(boardId).toBoardDto();
     }
+
+    public boolean getLikeState(int boardId) {
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("boardId", boardId);
+        paramsMap.put("email", SecurityContextHolder.getContext().getAuthentication().getName());
+        System.out.println(boardId);
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
+        return boardMapper.getLikeState(paramsMap) > 0;
+    }
+
+    public boolean setLike(int boardId) {
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("boardId", boardId);
+        paramsMap.put("email", SecurityContextHolder.getContext().getAuthentication().getName());
+        return boardMapper.insertLike(paramsMap) > 0;
+    }
+
+    public boolean cancelLike(int boardId) {
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("boardId", boardId);
+        paramsMap.put("email", SecurityContextHolder.getContext().getAuthentication().getName());
+        return boardMapper.deleteLike(paramsMap) > 0;
+    }
 }

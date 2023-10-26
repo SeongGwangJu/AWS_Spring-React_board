@@ -18,7 +18,8 @@ const SSideOption = css`
     right: -70px;
     height: 100%;
 `;
-const SLikeButton = css`
+
+const SLikeButton = (isLike) => css`
     //sticky 이해할 것.
     position: sticky;
     top: 150px;
@@ -26,7 +27,7 @@ const SLikeButton = css`
     border-radius: 50%;
     width: 50px;
     height: 50px;
-    background-color: #fff;
+    background-color: ${isLike? "#7bbdff" : "#fff"};
     cursor: pointer;
 `;
 
@@ -64,6 +65,7 @@ function BoardDetails(props) {
     const { boardId } = useParams();
     const [ board, setBoard ] = useState({});
     const [ like, setLike ] = useState({});
+
     const getBoard = useQuery(["getBoard"], async () => {
         try {
             return await instance.get(`/board/${boardId}`);
@@ -77,23 +79,57 @@ function BoardDetails(props) {
         }
     })
 
+    const getLikeState = useQuery(["getLikeState"], async () => {
+        try {
+            const option = {
+                headers: {
+                    Authorization: localStorage.getItem("accessToken")
+                }
+            }
+            return await instance.get(`/board/like/${boardId}`, option);
+        }catch(error) {
+
+        }
+    }, {
+        refetchOnWindowFocus: false,
+        retry: 0
+        }
+    )
+
     if(getBoard.isLoading) {
         return <></>
     }
 
-    const handleLikeBtn = () => {
-        // console.log(board);
-        console.log(principal);
+    const handleLikeBtnClick = async () => {
+        const option = {
+            headers: {
+                Authorization: localStorage.getItem("accessToken")
+            }
+        }
+        try{
+            if(!!getLikeState?.data?.data) {
+                await instance.delete(`/board/like/${boardId}`, option);
+            }else {
+                await instance.post(`/board/like/${boardId}`, {}, option);
+            }
+            getLikeState.refetch();
+        }catch(error) {
+            console.error(error);
+        }
     }
 
     return (
         <RootContainer>
             <div css={boardContainer}>
                 <div css={SSideOption}>
-                    <button disabled={!principal?.data?.data} css={SLikeButton} onClick={handleLikeBtn}>
-                        <div>♥</div>
-                        <div>10</div>
-                    </button>
+                    {!getLikeState.isLoading &&
+                        <button disabled={!principal?.data?.data}
+                                css={SLikeButton(getLikeState?.data?.data)}
+                                onClick={handleLikeBtnClick}>
+                            <div>♥</div>
+                            <div></div>
+                        </button>
+                    }
                 </div>
                 <h1 css={SBoardTitle}>{board.boardTitle}</h1>
                 <p><b>{board.nickname}</b> - {board.createDate}</p>
