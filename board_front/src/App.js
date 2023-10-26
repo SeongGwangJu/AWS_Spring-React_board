@@ -13,6 +13,7 @@ import AccountRoute from './Routes/AccountRoute';
 import EditPassword from './pages/EditPassword/EditPassword';
 import BoardWrite from './pages/BoardWrite/BoardWrite';
 import BoardList from './pages/BoardList/BoardList';
+import BoardDetails from './pages/BoardDetails/BoardDetails';
 
 function App() {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ function App() {
       <Route path="/account/*" element={<AccountRoute />} />
       <Route path="/board/write" element={ <BoardWrite />} />
       <Route path="/board/:category/:page" element={ <BoardList /> } />
-      <Route path="/board/:category/register" element={<></>} />
+      <Route path="/board/:boardId" element={<BoardDetails />} />
       <Route path="/board/:category/edit" element={<></>} />
       <Route path="/auth/forgot/password" element={<EditPassword />} />
       {/* <Route path="/" element={<></>} /> */}

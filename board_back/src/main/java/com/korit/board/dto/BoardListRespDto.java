@@ -3,6 +3,8 @@ package com.korit.board.dto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Builder
 @Data
 public class BoardListRespDto {

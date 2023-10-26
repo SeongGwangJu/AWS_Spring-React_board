@@ -28,7 +28,7 @@ const searchContainer = css`
     justify-content: flex-end;
     margin-bottom: 10px;
     width: 100%;
-    
+
     & > * {
         margin-left: 5px;
     }
@@ -53,9 +53,16 @@ const SPageNumbers = css`
         border: 1px solid #dbdbdb;
         cursor: pointer;
     }
-
 `;
 
+const SBoardTitle = css`
+    width: 500px;
+    overflow: hidden;
+    //텍스트가 넘어갔을 경우 줄여줌
+    max-width: 500px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`;
 function BoardList(props) {
 
     const navigate = useNavigate();
@@ -183,9 +190,10 @@ const handleSearchButtonClick = () => {
                     </thead>
                     <tbody>
                     {!getBoardList.isLoading && getBoardList?.data?.data.map(board => {
-                            return <tr key={board.boardId}>
+                            return <tr key={board.boardId}
+                            onClick={() => {navigate(`/board/${board.boardId}`)}}>
                                         <td>{board.boardId}</td>
-                                        <td>{board.title}</td>
+                                        <td css={SBoardTitle}>{board.title}</td>
                                         <td>{board.nickname}</td>
                                         <td>{board.createDate}</td>
                                         <td>{board.hitsCount}</td>

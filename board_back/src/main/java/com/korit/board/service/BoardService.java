@@ -1,9 +1,6 @@
 package com.korit.board.service;
 
-import com.korit.board.dto.BoardCategoryRespDto;
-import com.korit.board.dto.BoardListRespDto;
-import com.korit.board.dto.SearchBoardListReqDto;
-import com.korit.board.dto.WriteBoardReqDto;
+import com.korit.board.dto.*;
 import com.korit.board.entity.Board;
 import com.korit.board.entity.BoardCategory;
 import com.korit.board.repository.BoardMapper;
@@ -71,5 +68,10 @@ public class BoardService {
         paramsMap.put("searchValue", searchBoardListReqDto.getSearchValue());
 
         return boardMapper.getBoardCount(paramsMap);
+    }
+
+    public GetBoardRespDto getBoard(int boardId) {
+        System.out.println(boardMapper.getBoardByBoardId(boardId).toBoardDto());
+        return boardMapper.getBoardByBoardId(boardId).toBoardDto();
     }
 }
