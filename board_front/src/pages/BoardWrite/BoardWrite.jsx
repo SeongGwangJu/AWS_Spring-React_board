@@ -155,7 +155,7 @@ function BoardWrite(props) {
                 <h1>글쓰기</h1>
                 <div css={categoryContainer}>
                     <div css={selectBox}>
-                        <Select 
+                        <Select
                             options={selectOptions}
                             onChange={handleSelectChange}
                             defaultValue={selectedOption}
@@ -166,9 +166,9 @@ function BoardWrite(props) {
 
                 <div><input css={titleInput} type="text" name='title' placeholder='제목' onChange={handleTitleInput}/></div>
                 <div>
-                    <ReactQuill 
-                        style={{width: "928px", height: "500px"}} 
-                        modules={modules} 
+                    <ReactQuill
+                        style={{width: "928px", height: "500px"}}
+                        modules={modules}
                         onChange={handleContentInput} />
                 </div>
                 <div css={buttonContainer}>

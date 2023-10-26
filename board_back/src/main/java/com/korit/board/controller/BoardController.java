@@ -2,8 +2,7 @@ package com.korit.board.controller;
 
 import com.korit.board.aop.annotation.ArgsAop;
 import com.korit.board.aop.annotation.ValidAop;
-import com.korit.board.dto.RegisterBoardReqDto;
-import com.korit.board.dto.SearchBoardlistReqDto;
+import com.korit.board.dto.SearchBoardListReqDto;
 import com.korit.board.dto.WriteBoardReqDto;
 import com.korit.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -38,11 +37,21 @@ public class BoardController{
 	public ResponseEntity<?> getBoardList(
 			@PathVariable String categoryName,
 			@PathVariable int page,
-			SearchBoardlistReqDto searchBoardListReqDto) {
+			SearchBoardListReqDto searchBoardListReqDto) {
+		System.out.println("categoryName" + categoryName );
+		System.out.println("page" + page );
+		System.out.println("searchBoardListReqDto" + searchBoardListReqDto );
 
 		return ResponseEntity.ok(boardService.getBoardList(categoryName, page, searchBoardListReqDto));
 	}
 
+	@GetMapping("/boards/{categoryName}/count")
+	public ResponseEntity<?> getBoardCount(
+			@PathVariable String categoryName,
+			SearchBoardListReqDto searchBoardListReqDto) {
+
+		return ResponseEntity.ok(boardService.getBoardCount(categoryName, searchBoardListReqDto));
+	}
 }
 
 

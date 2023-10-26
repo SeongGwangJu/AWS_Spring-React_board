@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import ReactSelect from 'react-select';
 import { instance } from '../../api/config/instance';
 import RootContainer from '../../components/RootContainer/RootContainer';
@@ -40,28 +40,25 @@ const selectBox = css`
 
 const SPageNumbers = css`
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-top: 10px;
     width: 200px;
-    list-style-type: none;
-    & a {
-        text-decoration: none;
-        color: black;
-    }
 
-    & li {
+    & button {
         display: flex;
         justify-content: center;
         align-items: center;
+        margin: 0px 3px;
         width: 20px;
         border: 1px solid #dbdbdb;
+        cursor: pointer;
     }
 
 `;
 
 function BoardList(props) {
 
+    const navigate = useNavigate();
     const { category, page } = useParams();
 
     const options = [
@@ -70,29 +67,108 @@ function BoardList(props) {
         {value: "작성자", label: "작성자"}
     ];
 
-    const [ boardList, setBoardList ] = useState([]);
+
+    const [ selectedOption, setSelectedOption ] = useState(options[0]);
+
+    const search = {
+        optionName: selectedOption.label,
+        searchValue: ""
+    }
+
+    const [ searchParams, setSearchParams ] = useState(search);
 
     const getBoardList = useQuery(["getBoardList", page, category], async () => {
         const option = {
-            params: {
-                optionName: "",
-                searchValue: ""
-            }
+            params: searchParams
         }
         return await instance.get(`/boards/${category}/${page}`, option);
+    }, {
+        refetchOnWindowFocus: false
+    });
+
+    //git 참고 할 것
+
+    const getBoardCount = useQuery(["getBoardCount", page, category], async () => {
+        const option = {
+            params: searchParams
+        }
+        return await instance.get(`/boards/${category}/count`, option);
+    }, {
+        refetchOnWindowFocus: false
+    });
+
+const handleSearchInputChange = (e) => {
+    setSearchParams({
+        ...searchParams,
+        searchValue: e.target.value
     })
+}
+
+const handleSearchOptionSelect = (option) => {
+    setSearchParams({
+        ...searchParams,
+        optionName: option.label
+    })
+}
+
+const handleSearchButtonClick = () => {
+    navigate(`/board/${category}/1`);
+    getBoardList.refetch();
+    getBoardCount.refetch();
+}
+
+    // console.log("게시글 수 : "!getBoardCount.isLoading && getBoardCount.data.data);
+
+    const pagination = () => {
+        if(getBoardCount.isLoading) {
+            return <></>
+        }
+        const totalBoardCount = getBoardCount.data.data;
+
+        const lastPage = totalBoardCount % 10 === 0
+            ? totalBoardCount / 10
+            : Math.floor(totalBoardCount / 10 ) +1
+
+        const startIndex = parseInt(page) % 5 === 0 ? parseInt(page) - 4 : parseInt(page) - (parseInt(page) % 5 ) + 1;
+
+        const endIndex = startIndex + 4 <= lastPage ? startIndex + 4 : lastPage;
+
+        const pageNumbers = [];
+
+        for(let i = startIndex; i<= endIndex; i++) {
+            pageNumbers.push(i);
+        }
+
+        return (
+            <>
+                <button disabled={parseInt(page) === 1} onClick={() => {
+                    navigate(`/board/${category}/${parseInt(page) - 1}`);
+                }}>&#60;</button>
+
+                {pageNumbers.map(num => {
+                    return <button key={num} onClick={() => {
+                        navigate(`/board/${category}/${num}`);
+                    }}> {num} </button>
+                })}
+
+                <button disabled={parseInt(page) === lastPage} onClick={() => {
+                    navigate(`/board/${category}/${parseInt(page) + 1}`);
+                }} >&#62;</button>
+            </>
+        )
+    }
 
     return (
         <RootContainer>
             <div>
                 <h1>{category === "all" ? "전체 게시글" : category}</h1>
-                
                 <div css={searchContainer}>
                     <div css={selectBox}>
-                        <ReactSelect options={options} defaultValue={options[0]}/>
+                    <ReactSelect options={options} defaultValue={options[0]}
+                        onChange={handleSearchOptionSelect} />
                     </div>
-                    <input type="text" />
-                    <button>검색</button>
+                    <input type="text" onChange={handleSearchInputChange} />
+                    <button onClick={handleSearchButtonClick}>검색</button>
                 </div>
                 <table css={table}>
                     <thead>
@@ -119,15 +195,9 @@ function BoardList(props) {
                     </tbody>
                 </table>
 
-                <ul css={SPageNumbers}>
-                    <Link to={`/board/${category}/${parseInt(page) - 1}`}><li>&#60;</li></Link>
-                    <Link to={`/board/${category}/${1}`}><li>1</li></Link>
-                    <Link to={`/board/${category}/${2}`}><li>2</li></Link>
-                    <Link to={`/board/${category}/${3}`}><li>3</li></Link>
-                    <Link to={`/board/${category}/${4}`}><li>4</li></Link>
-                    <Link to={`/board/${category}/${5}`}><li>5</li></Link>
-                    <Link to={`/board/${category}/${parseInt(page) + 1}`}><li>&#62;</li></Link>
-                </ul>
+                <div css={SPageNumbers}>
+                    {pagination()}
+                </div>
             </div>
         </RootContainer>
     );
