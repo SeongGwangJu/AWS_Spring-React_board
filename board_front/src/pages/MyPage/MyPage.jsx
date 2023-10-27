@@ -156,7 +156,7 @@ function Mypage(props) {
                                 <button onClick={handleUploadCancel}>취소</button>
                             </div>
                         }
-                        <h3>누적 포인트: 0원</h3> <button onClcik={() => {navigate("/store/products")}}>포인트 구매</button>
+                        <h3>누적 포인트: {principal.userPoint} Point</h3> <button onClcik={() => {navigate("/store/products")}}>포인트 구매</button>
                     </div>
                 </div>
                 <div>
