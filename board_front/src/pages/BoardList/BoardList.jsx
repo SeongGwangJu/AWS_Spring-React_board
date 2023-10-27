@@ -1,11 +1,11 @@
 import { css } from '@emotion/react';
+/** @jsxImportSource @emotion/react */
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import ReactSelect from 'react-select';
 import { instance } from '../../api/config/instance';
 import RootContainer from '../../components/RootContainer/RootContainer';
-/** @jsxImportSource @emotion/react */
 
 const table = css`
     width: 100%;
@@ -196,8 +196,8 @@ const handleSearchButtonClick = () => {
                                         <td css={SBoardTitle}>{board.title}</td>
                                         <td>{board.nickname}</td>
                                         <td>{board.createDate}</td>
-                                        <td>{board.hitsCount}</td>
                                         <td>{board.likeCount}</td>
+                                        <td>{board.hitsCount}</td>
                                     </tr>
                         })}
                     </tbody>

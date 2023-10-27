@@ -64,7 +64,6 @@ function BoardDetails(props) {
 
     const { boardId } = useParams();
     const [ board, setBoard ] = useState({});
-    const [ like, setLike ] = useState({});
 
     const getBoard = useQuery(["getBoard"], async () => {
         try {
@@ -96,10 +95,6 @@ function BoardDetails(props) {
         }
     )
 
-    if(getBoard.isLoading) {
-        return <></>
-    }
-
     const handleLikeBtnClick = async () => {
         const option = {
             headers: {
@@ -115,6 +110,10 @@ function BoardDetails(props) {
             getLikeState.refetch();
         }catch(error) {
             console.error(error);
+        }
+
+        if(getBoard.isLoading) {
+            return <></>
         }
     }
 

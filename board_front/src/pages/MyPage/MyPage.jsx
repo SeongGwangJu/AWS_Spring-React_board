@@ -7,10 +7,11 @@ import { css } from "@emotion/react";
 import { ref, getDownloadURL, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../api/firebase/firebase"
 import { Line } from 'rc-progress';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Mypage(props) {
 
+    const navigate = useNavigate();
     const queyrClient = useQueryClient();
     const principalState = queyrClient.getQueryState("getPrincipal");
     const principal = principalState.data.data;
@@ -155,7 +156,7 @@ function Mypage(props) {
                                 <button onClick={handleUploadCancel}>취소</button>
                             </div>
                         }
-                        <div>누적 포인트: 0원</div>
+                        <h3>누적 포인트: 0원</h3> <button onClcik={() => {navigate("/store/products")}}>포인트 구매</button>
                     </div>
                 </div>
                 <div>
@@ -169,7 +170,7 @@ function Mypage(props) {
                     </div>
                 </div>
             </div>
-            <Link to= {"/account/password"}>비밀번호 변경</Link>;
+            <Link to= {"/account/password"}>비밀번호 변경</Link>
 
         </RootContainer>
     );

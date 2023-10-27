@@ -14,6 +14,7 @@ import EditPassword from './pages/EditPassword/EditPassword';
 import BoardWrite from './pages/BoardWrite/BoardWrite';
 import BoardList from './pages/BoardList/BoardList';
 import BoardDetails from './pages/BoardDetails/BoardDetails';
+import Store from './pages/Store/Store';
 
 function App() {
   const navigate = useNavigate();
@@ -54,6 +55,7 @@ function App() {
       <Route path="/board/:boardId" element={<BoardDetails />} />
       <Route path="/board/:category/edit" element={<></>} />
       <Route path="/auth/forgot/password" element={<EditPassword />} />
+      <Route path="/store/products" element={<Store />} />
       {/* <Route path="/" element={<></>} /> */}
     </Routes>
     </RootLayout>
