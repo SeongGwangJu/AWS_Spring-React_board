@@ -14,7 +14,7 @@ import EditPassword from './pages/EditPassword/EditPassword';
 import BoardWrite from './pages/BoardWrite/BoardWrite';
 import BoardList from './pages/BoardList/BoardList';
 import BoardDetails from './pages/BoardDetails/BoardDetails';
-import Store from './pages/Store/Store';
+import Store from './pages/Store/PointStore';
 
 function App() {
   const navigate = useNavigate();

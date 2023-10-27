@@ -4,6 +4,7 @@ import { css } from '@emotion/react';
 import { instance } from '../../api/config/instance';
 import { useQuery, useQueryClient } from 'react-query';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 /** @jsxImportSource @emotion/react */
 
 const SStoreContainer = css`
@@ -24,9 +25,10 @@ const SProductContainer = css`
     cursor: pointer;
 `;
 
-function Store(props) {
-
+function PointStore(props) {
+    const navigate = useNavigate();
     const queryClient = useQueryClient();
+
     const getProducts = useQuery(["getProducts"], async () => {
         try {
             const option = {
@@ -74,6 +76,20 @@ function Store(props) {
 
             if(success) {
                 //우리 서버에 주문데이터 insert
+                const orderData = {
+                    productId: product.productId,
+                    email: principal?.data?.data?.email
+                }
+                const option = {
+                    headers : {
+                        Authorization: localStorage.getItem("accessToken")
+                    }
+                }
+                instance.post("/order", orderData, option).then(response => {
+                    alert("포인트 충전이 완료되었습니다.");
+                    queryClient.refetchQueries(["getPrincipal"]);
+                    navigate("/account/mypage");
+                })
             }else {
                 alert(error_msg);
             }
@@ -84,7 +100,7 @@ function Store(props) {
             <h1>포인트 충전하기</h1>
             <div css={SStoreContainer}>
                 {!getProducts.isLoading && getProducts?.data?.data.map(product => {
-                    return <button css={SProductContainer}
+                    return <button key={product.productId} css={SProductContainer}
                         onClick={() => {handlePaymentSubmit(product);}}>
                             {product.productName}Point
                             </button>
@@ -94,4 +110,4 @@ function Store(props) {
     );
 }
 
-export default Store;
+export default PointStore;
