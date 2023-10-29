@@ -149,7 +149,6 @@ function Mypage(props) {
                         <input css={file} type="file"
                                 onChange={handleProfileFileChange} ref={profileFileRef} />
                         {!!uploadFiles.length &&
-                        
                             <div>
                                 <Line percent={progressPercent} strokeWidth={4} strokeColor="#dbdbdb" />
                                 <button onClick={handleUploadSubmit}>변경</button>

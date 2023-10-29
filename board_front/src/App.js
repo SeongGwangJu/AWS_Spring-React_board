@@ -15,6 +15,7 @@ import BoardWrite from './pages/BoardWrite/BoardWrite';
 import BoardList from './pages/BoardList/BoardList';
 import BoardDetails from './pages/BoardDetails/BoardDetails';
 import Store from './pages/Store/PointStore';
+import BoardUpdate from './pages/BoardUpdate/BoardUpdate';
 
 function App() {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ function App() {
       <Route path="/board/write" element={ <BoardWrite />} />
       <Route path="/board/:category/:page" element={ <BoardList /> } />
       <Route path="/board/:boardId" element={<BoardDetails />} />
-      <Route path="/board/:category/edit" element={<></>} />
+      <Route path="/board/edit/:boardId" element={ <BoardUpdate />} />
       <Route path="/auth/forgot/password" element={<EditPassword />} />
       <Route path="/store/products" element={<Store />} />
       {/* <Route path="/" element={<></>} /> */}

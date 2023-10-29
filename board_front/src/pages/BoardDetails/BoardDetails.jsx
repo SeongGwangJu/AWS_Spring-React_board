@@ -1,6 +1,6 @@
 import React from 'react';
 import RootContainer from '../../components/RootContainer/RootContainer';
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useQuery, useQueryClient } from 'react-query';
 import { instance } from '../../api/config/instance';
 import { useState } from 'react';
@@ -57,8 +57,24 @@ const contentContainer = css`
     }
 `;
 
+const STitleBottom =css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    * > button {
+        width: 60px;
+        height: 30px;
+    }
+
+    * > button:first-of-type {
+        margin-right: 15px;
+    }
+`;
+
 function BoardDetails(props) {
 
+    const navigate = useNavigate();
     const queryClient = useQueryClient();
     const principal = queryClient.getQueryState("getPrincipal")
 
@@ -117,6 +133,39 @@ function BoardDetails(props) {
         }
     }
 
+    const principalCheck = () => {
+        if(principal.data.data.email != board.email) {
+            alert("수정/삭제는 본인만 할 수 있습니다.")
+            return false;
+        }
+        return true;
+    }
+
+    const handleUpdateBtnClick = async () => {
+        if(!principalCheck()) { //본인이 아닐경우
+            return;
+        }
+        console.log(board)
+        navigate(`/board/edit/${board.boardId}`);
+    }
+
+    const handleDeleteBtnClick = async () => {
+        if(principalCheck()) {
+            if(window.confirm("정말로 글을 삭제하시겠습니까?")) {
+                try{
+                    await instance.delete(`/board/${boardId}`);
+                    window.history.back();
+                }catch(error) {
+                    console.log(error);
+                }
+            }
+        }
+    }
+
+    const handleTestBtn = () => {
+        console.log(principal)
+    }
+
     return (
         <RootContainer>
             <div css={boardContainer}>
@@ -131,7 +180,14 @@ function BoardDetails(props) {
                     }
                 </div>
                 <h1 css={SBoardTitle}>{board.boardTitle}</h1>
-                <p><b>{board.nickname}</b> - {board.createDate}</p>
+                <div css={STitleBottom}>
+                    <p><b>{board.nickname}</b> - {board.createDate}</p>
+                    <div>
+                        <button onClick={handleUpdateBtnClick}>수정</button>
+                        <button onClick={handleDeleteBtnClick}>삭제</button>
+                        <button onClick={handleTestBtn}>test</button>
+                    </div>
+                </div>
                 <div css={line}></div>
                 {/* 리액트에서 InnerHTML쓰는 방법 */}
                 <div css={contentContainer} dangerouslySetInnerHTML={{__html: board.boardContent}}></div>

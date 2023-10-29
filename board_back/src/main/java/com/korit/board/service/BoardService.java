@@ -75,6 +75,10 @@ public class BoardService {
         return boardMapper.getBoardByBoardId(boardId).toBoardDto();
     }
 
+    public boolean deleteBoard(int boardId) {
+        return boardMapper.deleteBoard(boardId) >0 ;
+    }
+
     public boolean getLikeState(int boardId) {
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("boardId", boardId);

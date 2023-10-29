@@ -192,12 +192,22 @@
     </insert>
 
     <delete id="deleteLike"
-            parameterType="hashmap">
-        delete
+            parameterType="java.lang.Integer">
         from
             board_like_tb
         where
             board_id = #{boardId}
         and email = #{email}
+    </delete>
+
+    <delete id="deleteBoard"
+            parameterType="java.lang.Integer">
+        select
+
+        delete
+        from
+            board_tb
+        where
+            board_id = #{boardId}
     </delete>
 </mapper>

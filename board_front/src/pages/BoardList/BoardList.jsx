@@ -63,6 +63,7 @@ const SBoardTitle = css`
     text-overflow: ellipsis;
     white-space: nowrap;
 `;
+
 function BoardList(props) {
 
     const navigate = useNavigate();
