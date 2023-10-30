@@ -1,6 +1,6 @@
 import React from 'react';
 import RootContainer from '../../components/RootContainer/RootContainer';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useQuery, useQueryClient } from 'react-query';
 import { instance } from '../../api/config/instance';
 import { useState } from 'react';
@@ -59,6 +59,7 @@ const contentContainer = css`
 
 function BoardDetails(props) {
 
+    const navigate = useNavigate();
     const queryClient = useQueryClient();
     const principal = queryClient.getQueryState("getPrincipal")
 
@@ -69,6 +70,8 @@ function BoardDetails(props) {
         try {
             return await instance.get(`/board/${boardId}`);
         }catch(error) {
+            alert("해당 게시물을 불러올 수 없습니다.")
+            navigate(-1);
 
         }
     }, {
@@ -117,6 +120,23 @@ function BoardDetails(props) {
         }
     }
 
+    const handleDeleteBoard = async () => {
+        if(!window.confirm("해당 게시글을 정말로 삭제하겠습니까?")) {
+            return;
+        }
+
+        try {
+            await instance.delete(`/board/${boardId}`);
+            alert("게시글 삭제 완료.");
+            navigate(-1); //뒤로가기
+        }catch(error) {
+            
+        }
+    }
+
+    const handleEditBoard = async () => {
+        
+    }
     return (
         <RootContainer>
             <div css={boardContainer}>
@@ -135,6 +155,12 @@ function BoardDetails(props) {
                 <div css={line}></div>
                 {/* 리액트에서 InnerHTML쓰는 방법 */}
                 <div css={contentContainer} dangerouslySetInnerHTML={{__html: board.boardContent}}></div>
+                {principal?.data?.data?.email === getBoard?.data?.data?.email &&
+                    <div>
+                        <button onClick={() => {navigate(`/board/edit/${boardId}`)}}>수정</button>
+                        <button onClick={handleDeleteBoard}>삭제</button>
+                    </div>
+                        }
             </div>
         </RootContainer>
     );

@@ -84,6 +84,7 @@ public class BoardService {
         return boardMapper.getLikeState(paramsMap) > 0;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public boolean setLike(int boardId) {
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("boardId", boardId);
@@ -91,10 +92,25 @@ public class BoardService {
         return boardMapper.insertLike(paramsMap) > 0;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public boolean cancelLike(int boardId) {
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("boardId", boardId);
         paramsMap.put("email", SecurityContextHolder.getContext().getAuthentication().getName());
         return boardMapper.deleteLike(paramsMap) > 0;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public boolean delteBoard(int boardId) {
+        return boardMapper.deleteBoard(boardId) > 0;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public boolean editBoard(int boardId, EditBoardReqDto editBoardReqDto) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Board board = editBoardReqDto.toBoardEntity(email);
+        board.setBoardId(boardId);
+        return boardMapper.updateBoard(board) > 0;
+
     }
 }

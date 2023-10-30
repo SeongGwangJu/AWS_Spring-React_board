@@ -20,6 +20,8 @@
         <result property="boardHitsCount" column="board_hits_count" />
         <result property="boardLikeCount" column="board_like_count" />
     </resultMap>
+
+
     <select id="getBoardCategories" resultMap="boardCategoryMap">
         SELECT
             bct.board_category_id,
@@ -200,4 +202,33 @@
             board_id = #{boardId}
         and email = #{email}
     </delete>
+
+    <delete id="deleteBoard"
+            parameterType="java.lang.Integer">
+        delete
+        from
+            board_tb
+        where
+            board_id = #{boardId}
+    </delete>
+
+    <update id="updateBoard">
+        update board_tb
+        set
+            board_title = #{boardTitle},
+            board_content = #{boardContent},
+            board_category_id = #{boardCategoryId}
+        where
+            board_id = #{boardId}
+        and (email = #{email})
+            <!-- authority_tb가 있다면 권한도 참조해야함. 작성자거나 or 권한이 있거나-->
+<!--            or 1 = (select &lt;!&ndash;아래 쿼리를 만족시켜 조회가 되면&ndash;&gt;-->
+<!--                count(*)-->
+<!--            from authority_tb at-->
+<!--            where-->
+<!--                at.role_id = 3-->
+<!--            and ut.email = #{email}))-->
+
+    </update>
+
 </mapper>
